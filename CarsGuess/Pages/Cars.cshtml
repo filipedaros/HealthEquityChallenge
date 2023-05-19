@@ -1,0 +1,92 @@
+﻿@page
+@model CarsGuess.Pages.CarsModel
+@{
+}
+
+<table class ="table">
+    <thead>
+        <tr>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Doors</th>
+            <th>Color</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var car in Model.Cars)
+        {
+            <tr>
+                <td>@car.Make</td>
+                <td>@car.Model</td>
+                <td>@car.Year</td>
+                <td>@car.Doors</td>
+                <td>@car.Color</td>
+                <td>
+                    <form asp-page-handler="selectedCar" asp-route-id="@car.Id" value="">
+                        <button class="btn btn-info details"><i class="glyphicon glyphicon-file"></i>Guess my price</button>
+                    </form>  
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@if(Model.SelectedCar != null)
+{
+    <form asp-page-handler="guess" asp-route-id="@Model.SelectedCar.Id" value="">
+        <div id="modalGuess" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Guess the price for @Model.SelectedCar.Make model @Model.SelectedCar.Model</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @Html.HiddenFor(Model => Model.SelectedCar.Id)
+                        @Html.EditorFor(Model => Model.PriceGuess)
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-info details" data-bs-dismiss="modal"><i class="glyphicon glyphicon-file"></i>Send my guess</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+
+
+@if (!string.IsNullOrEmpty(Model.GuessResult))
+{
+    <div id="guessResult" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Your result</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @Model.GuessResult
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#modalGuess').modal('show');
+            $('#guessResult').modal('show');
+        });
+        
+    </script>
+}
