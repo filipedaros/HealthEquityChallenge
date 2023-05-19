@@ -6,7 +6,7 @@ using MediatR;
 namespace CarsGuess.Domain.Queries
 {
     /// <summary>
-    /// We could also use this class to query a service somewhere else, using http calls
+    /// We could also use this class to query a service somewhere else, using http requests
     /// </summary>
     public class ListAllCarsQueryRequest : IRequest<ListAllCarsQueryResponse>
     {

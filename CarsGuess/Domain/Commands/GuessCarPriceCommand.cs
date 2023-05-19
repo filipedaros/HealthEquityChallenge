@@ -5,7 +5,7 @@ using MediatR;
 namespace CarsGuess.Domain.Commands
 {
     /// <summary>
-    /// We could also use this class to query a service somewhere else, using http calls
+    /// We could also use this class to query a service somewhere else, using http requests
     /// </summary>
     public class GuessCarPriceCommandRequest : IRequest<GuessCarPriceCommandResponse>
     {
